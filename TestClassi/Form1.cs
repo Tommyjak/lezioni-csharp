@@ -19,11 +19,10 @@ namespace TestClassi
            
         private void Form1_Load(object sender, EventArgs e)
         {
-            Monster strongbonna = new Monster("Strongbonna", 10, 50);
-            Monster charmender = new Monster("Charmender", 56, 10);
-            strongbonna.attack(charmender);
-            strongbonna.attack(charmender);
-            strongbonna.attack(charmender);
+            Monster strongbonna = new Monster("Strongbonna", 10, 50, textBox1);
+            Monster charmender = new Monster("Charmender", 56, 10, textBox1);
+            strongbonna.attack(charmender, textBox1);
+            charmender.attack(strongbonna, textBox1);
         }
     }
 }
