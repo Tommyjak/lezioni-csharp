@@ -9,13 +9,15 @@ namespace MortaraMonster
         public int maxHp;
         public int curHp;
         public int damage;
+        public int healfactor;
         
-        public Monster(string name, int maxHp, int damage, TextBox t)
+        public Monster(string name, int maxHp, int damage, TextBox t, int healfactor = 0)//creazione parametro opzionale//solo dopo quelli obbligatori!
         {
             this.name = name;
             this.maxHp = maxHp;
             curHp = maxHp;
             this.damage = damage;
+            this.healfactor = healfactor;
             describe(t);
         }
 
@@ -39,6 +41,12 @@ namespace MortaraMonster
         {
             if (target.curHp <= 0)
             {
+                t.Text += (target.name + "non può attacare, è gia esausto." + "\r\n");
+                t.Text += ("_____________________________________" + "\r\n");
+                return;
+            }
+            if (target.curHp <= 0)
+            {
                 t.Text += (target.name + " è già esausto, non infierire." + "\r\n");
                 t.Text += ("_____________________________________" + "\r\n");
                 return;
@@ -58,6 +66,32 @@ namespace MortaraMonster
                 t.Text += ("a " + target.name + " rimangono " + target.curHp + " hp" + "\r\n");
                 t.Text += ("_____________________________________" + "\r\n");
             }
+        }
+
+        public void heal(Monster target, TextBox t)
+        {
+            if (target.healfactor == 0)
+            {
+                t.Text += (target.name + "non ha potere di cura" +"\r\n");
+                t.Text += ("_____________________________________" + "\r\n");
+                return;
+            }
+            if (target.curHp <= 0)
+            {
+                t.Text += ("Non puoi curare" + target.name + " , è già esausto." + "\r\n");
+                t.Text += ("_____________________________________" + "\r\n");
+                return;
+            }
+
+            target.curHp += target.healfactor;
+
+            if (target.curHp >= target.maxHp)
+            {
+                t.Text += (target.name + "si è curato." + "\r\n");
+                t.Text += (target.name + "adesso ha " + target.curHp + "/" + target.maxHp + "HP");
+                t.Text += ("_____________________________________" + "\r\n");
+            }
+
         }
     }
 }
