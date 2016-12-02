@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace TestClassi
+namespace MortaraMonster
 {
     class Monster
     {

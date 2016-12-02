@@ -1,4 +1,4 @@
-﻿namespace TestClassi
+﻿namespace MortaraMonster
 {
     partial class Form1
     {
