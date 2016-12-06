@@ -5,27 +5,78 @@ namespace MortaraMonster
 {
     class Monster
     {
-        public string name;
-        public int maxHp;
-        public int curHp;
-        public int damage;
-        public int healfactor;
-        
+        private string _name;
+        public string name
+        {
+            get
+            {
+                return _name;
+            }
+        }
+
+        private int _maxHp;
+        public int maxHp
+        {
+            get
+            {
+                return _maxHp;
+            }
+        }
+
+        private int _curHp;
+        public int curHp
+        {
+            set
+            {
+                if (value < 0)
+                    value = 0;
+
+                else if (value > _maxHp)
+                    value = _maxHp;
+
+            }
+
+            get
+            {
+                return _curHp;
+            }
+        }
+
+        private int _damage;
+        public int damage
+        {
+            get
+            {
+                return _damage;
+            }
+        }
+
+        private int _healfactor;
+        public int healfactor
+        {
+            get
+            {
+                return _healfactor;
+            }
+        }
+
+
         public Monster(string name, int maxHp, int damage, TextBox t, int healfactor = 0)//creazione parametro opzionale//solo dopo quelli obbligatori!
         {
-            this.name = name;
-            this.maxHp = maxHp;
-            curHp = maxHp;
-            this.damage = damage;
-            this.healfactor = healfactor;
+            _name = name;
+            _maxHp = maxHp;
+            _curHp = maxHp;
+            _damage = damage;
+            _healfactor = healfactor;
             describe(t);
         }
 
         public string describe()
         {
-            string output = "Questo è " + name + "\r\n";
-            output += "HP: " + curHp + "\r\n";
-            output += "DAMAGE: " + damage + "\r\n";
+            string output = "Questo è " + _name + "\r\n";
+            output += "HP: " + _curHp + "\r\n";
+            output += "DAMAGE: " + _damage + "\r\n";
+            output += "PC: " + _healfactor + "\r\n";
             output += "_____________________________________" + "\r\n";
 
 
@@ -39,58 +90,66 @@ namespace MortaraMonster
 
         public void attack(Monster target, TextBox t)
         {
-            if (target.curHp <= 0)
+            if (target._curHp <= 0)
             {
-                t.Text += (target.name + "non può attacare, è gia esausto." + "\r\n");
+                t.Text += (target._name + "non può attacare, è gia esausto." + "\r\n");
                 t.Text += ("_____________________________________" + "\r\n");
                 return;
             }
             if (target.curHp <= 0)
             {
-                t.Text += (target.name + " è già esausto, non infierire." + "\r\n");
+                t.Text += (target._name + " è già esausto, non infierire." + "\r\n");
                 t.Text += ("_____________________________________" + "\r\n");
                 return;
             }
 
-            t.Text += (name + " attacca " + target.name + "\r\n");
-            t.Text += (name + " fa " + damage + " danni a " + target.name + "\r\n");
-            target.curHp -= damage;
+            t.Text += (_name + " attacca " + target._name + "\r\n");
+            t.Text += (_name + " fa " + _damage + " danni a " + target._name + "\r\n");
+            target._curHp -= _damage;
             
-            if (target.curHp <= 0 )
+            if (target._curHp <= 0 )
             {
-                target.curHp = 0;
-                t.Text += (target.name + " è esausto." + "\r\n");
+                target._curHp = 0;
+                t.Text += (target._name + " è esausto." + "\r\n");
                 t.Text += ("_____________________________________" + "\r\n");
             } else
             {
-                t.Text += ("a " + target.name + " rimangono " + target.curHp + " hp" + "\r\n");
+                t.Text += ("a " + target._name + " rimangono " + target._curHp + " hp" + "\r\n");
                 t.Text += ("_____________________________________" + "\r\n");
             }
         }
 
         public void heal(Monster target, TextBox t)
         {
-            if (target.healfactor == 0)
+            if (_healfactor == 0)
             {
-                t.Text += (target.name + "non ha potere di cura" +"\r\n");
+                t.Text += (_name + " non ha potere di cura" +"\r\n");
                 t.Text += ("_____________________________________" + "\r\n");
                 return;
             }
-            if (target.curHp <= 0)
+            if (_curHp <= 0)
             {
-                t.Text += ("Non puoi curare" + target.name + " , è già esausto." + "\r\n");
+                t.Text += ("Non puoi curare nessuno, sei già esausto." + "\r\n");
                 t.Text += ("_____________________________________" + "\r\n");
                 return;
             }
 
-            target.curHp += target.healfactor;
-
-            if (target.curHp >= target.maxHp)
+            if (target._curHp <= 0)
             {
-                t.Text += (target.name + "si è curato." + "\r\n");
-                t.Text += (target.name + "adesso ha " + target.curHp + "/" + target.maxHp + "HP");
+                t.Text += ("Non puoi curare" + target._name + " , è già esausto." + "\r\n");
                 t.Text += ("_____________________________________" + "\r\n");
+                return;
             }
+
+            target._curHp += target._healfactor;
+
+            if (target._curHp >= target._maxHp)
+            {
+                target._curHp = target._maxHp;
+            }
+
+            t.Text += (_name + " usa cura su " + target._name + "\r\n");
+            t.Text += (target._name + " è stato curato e adesso ha " + target._curHp + "/" + target._maxHp + "HP");
 
         }
     }
